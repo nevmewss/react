@@ -10,61 +10,19 @@
     </head>
     <body>
         <div id="root"></div>
-        <a href="task1.html">Task num1</a>
-        <a href="task2.html">Task num4</a>
-        <!-- <script type="text/babel">
-			 Задача 1. Вводиться кількість пасажирів. Вивести: скільки потрібно автобусів (кожен автобус на 20 місць) скільки
-       		 пляшок води (кожному пасажиру 2 пляшки) скільки бутербродів (кожному пасажиру 3 бутерброди) 
-            const { useState } = React;
+        <script type="text/babel">
+            // 			Задача 4. “Рахунок у банку”
+            // Вимоги:
+            // 1) Спочатку сума дорівнює 0грн. Змінити суму у гривнях можна або зарахуванням на рахунок, або зняттям.
+            // 2) Сума автоматично переводиться у долари та євро (фіксований курс задається у data).
+            // 3) можливість зарахувати суму (контролювати, щоб не була від’ємною)
+            // 4) можливість зняти (щоб не можна зняти більше ніж є на рахунку)
+            // 5) при виконанні зняття і зарахування коштів вираховувати 3% від суми (відображати кількість відсотків автоматично)
 
-            function App() {
-                const [value, setValue] = useState(20);
-                const [buses, setBuses] = useState(1);
-                const [bottles, setBottles] = useState(40);
-                const [sandwiches, setSandwiches] = useState(60);
-
-                function HandlerChange(event) {
-                    const newValue = event.target.value;
-                    setValue(newValue);
-
-                    setSandwiches(newValue * 3);
-                    setBottles(newValue * 2);
-                    setBuses(Math.ceil(newValue / 20));
-                }
-
-                function SetNeeds({ sandwiches, bottles, buses }) {
-                    return (
-                        <p>
-                            Сендвічів: {sandwiches} <br /> Пляшок води: {bottles} <br /> Автобусів: {buses}
-                        </p>
-                    );
-                }
-
-                return (
-                    <React.Fragment>
-                        <input value={value} type="number" onChange={HandlerChange} />
-                        <SetNeeds sandwiches={sandwiches} bottles={bottles} buses={buses} />
-                    </React.Fragment>
-                );
-            }
-
-            ReactDOM.render(<App />, document.getElementById("root"));
-        </script> -->
-
-        <!-- <script type="text/babel">
-			Задача 4. “Рахунок у банку”
-Вимоги:
-1) Спочатку сума дорівнює 0грн. Змінити суму у гривнях можна або зарахуванням на рахунок, або зняттям.
-2) Сума автоматично переводиться у долари та євро (фіксований курс задається у data).
-3) можливість зарахувати суму (контролювати, щоб не була від’ємною)
-4) можливість зняти (щоб не можна зняти більше ніж є на рахунку)
-5) при виконанні зняття і зарахування коштів вираховувати 3% від суми (відображати кількість відсотків автоматично)
-
-При зміні суми :
-- якщо було зняття, то суму відображати червоним
-- якщо було зарахування, то суму відображати зеленим
-Якщо сума валюти менша за 100 то відображати червоним кольором, інакше - зеленим
-
+            // При зміні суми :
+            // - якщо було зняття, то суму відображати червоним
+            // - якщо було зарахування, то суму відображати зеленим
+            // Якщо сума валюти менша за 100 то відображати червоним кольором, інакше - зеленим
 
             const { useState } = React;
 
@@ -178,6 +136,6 @@
             }
 
             ReactDOM.render(<App />, document.getElementById("root"));
-        </script> -->
+        </script>
     </body>
 </html>

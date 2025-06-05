@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>REACT - LESSON 1</title>
+        <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            //  Задача 1. Вводиться кількість пасажирів. Вивести: скільки потрібно автобусів (кожен автобус на 20 місць) скільки
+            //  пляшок води (кожному пасажиру 2 пляшки) скільки бутербродів (кожному пасажиру 3 бутерброди)
+            // const { useState } = React;
+
+            function App() {
+                const [value, setValue] = useState(20);
+                const [buses, setBuses] = useState(1);
+                const [bottles, setBottles] = useState(40);
+                const [sandwiches, setSandwiches] = useState(60);
+
+                function HandlerChange(event) {
+                    const newValue = event.target.value;
+                    setValue(newValue);
+
+                    setSandwiches(newValue * 3);
+                    setBottles(newValue * 2);
+                    setBuses(Math.ceil(newValue / 20));
+                }
+
+                function SetNeeds({ sandwiches, bottles, buses }) {
+                    return (
+                        <p>
+                            Сендвічів: {sandwiches} <br /> Пляшок води: {bottles} <br /> Автобусів: {buses}
+                        </p>
+                    );
+                }
+
+                return (
+                    <React.Fragment>
+                        <input value={value} type="number" onChange={HandlerChange} />
+                        <SetNeeds sandwiches={sandwiches} bottles={bottles} buses={buses} />
+                    </React.Fragment>
+                );
+            }
+
+            ReactDOM.render(<App />, document.getElementById("root"));
+        </script>
+    </body>
+</html>
