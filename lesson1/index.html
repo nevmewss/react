@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>REACT - LESSON 1</title>
+        <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <!-- <script type="text/babel">
+			 Задача 1. Вводиться кількість пасажирів. Вивести: скільки потрібно автобусів (кожен автобус на 20 місць) скільки
+       		 пляшок води (кожному пасажиру 2 пляшки) скільки бутербродів (кожному пасажиру 3 бутерброди) 
+            const { useState } = React;
+
+            function App() {
+                const [value, setValue] = useState(20);
+                const [buses, setBuses] = useState(1);
+                const [bottles, setBottles] = useState(40);
+                const [sandwiches, setSandwiches] = useState(60);
+
+                function HandlerChange(event) {
+                    const newValue = event.target.value;
+                    setValue(newValue);
+
+                    setSandwiches(newValue * 3);
+                    setBottles(newValue * 2);
+                    setBuses(Math.ceil(newValue / 20));
+                }
+
+                function SetNeeds({ sandwiches, bottles, buses }) {
+                    return (
+                        <p>
+                            Сендвічів: {sandwiches} <br /> Пляшок води: {bottles} <br /> Автобусів: {buses}
+                        </p>
+                    );
+                }
+
+                return (
+                    <React.Fragment>
+                        <input value={value} type="number" onChange={HandlerChange} />
+                        <SetNeeds sandwiches={sandwiches} bottles={bottles} buses={buses} />
+                    </React.Fragment>
+                );
+            }
+
+            ReactDOM.render(<App />, document.getElementById("root"));
+        </script> -->
+
+        <!-- <script type="text/babel">
+			Задача 4. “Рахунок у банку”
+Вимоги:
+1) Спочатку сума дорівнює 0грн. Змінити суму у гривнях можна або зарахуванням на рахунок, або зняттям.
+2) Сума автоматично переводиться у долари та євро (фіксований курс задається у data).
+3) можливість зарахувати суму (контролювати, щоб не була від’ємною)
+4) можливість зняти (щоб не можна зняти більше ніж є на рахунку)
+5) при виконанні зняття і зарахування коштів вираховувати 3% від суми (відображати кількість відсотків автоматично)
+
+При зміні суми :
+- якщо було зняття, то суму відображати червоним
+- якщо було зарахування, то суму відображати зеленим
+Якщо сума валюти менша за 100 то відображати червоним кольором, інакше - зеленим
+
+
+            const { useState } = React;
+
+            function App() {
+                const [input1, setInput1] = useState(0);
+                const [input2, setInput2] = useState(0);
+                const [commission, setCommission] = useState(0);
+                const [dollars, setDollars] = useState(0);
+                const [euro, setEuro] = useState(0);
+                const [sum, setSum] = useState(0);
+
+                const EURO_COURSE = 47.18;
+                const DOLLAR_COURSE = 41.44;
+                const COMISSION_COST = 0.03;
+
+                function InputHandle1(e) {
+                    const value = parseFloat(e.target.value);
+                    setInput1(value);
+
+                    if (!isNaN(value) && value > 0) {
+                        const com = value * COMISSION_COST;
+                        setCommission(com.toFixed(2));
+                    } else {
+                        setCommission(0);
+                    }
+                }
+
+                function InputHandle2(e) {
+                    const value = parseFloat(e.target.value);
+                    setInput2(value);
+
+                    if (!isNaN(value) && value > 0) {
+                        const com = value * COMISSION_COST;
+                        setCommission(com.toFixed(2));
+                    } else {
+                        setCommission(0);
+                    }
+                }
+
+                function SendHandle() {
+                    if (input1 !== null && !isNaN(input1) && input1 > 0) {
+                        const com = input1 * COMISSION_COST;
+                        const netAmount = input1 - com;
+                        const newSum = sum + netAmount;
+                        setSum(newSum);
+
+                        const sumInfo = document.getElementById("info");
+                        if (sumInfo) {
+                            sumInfo.style.color = newSum < 100 ? "red" : "green";
+                        }
+                    }
+                }
+
+                function WithdrawHandle() {
+                    if (!isNaN(input2) && input2 > 0) {
+                        const com = input2 * 0.01;
+                        const total = input2 + com;
+
+                        if (sum - total < 0) {
+                            alert("Не вистачає коштів!");
+                            return;
+                        }
+
+                        const newSum = sum - total;
+                        setSum(newSum);
+                        const sumInfo = document.getElementById("info");
+
+                        sumInfo.style.color = "red";
+                    }
+                }
+
+                function ConvertToDollars({ sum }) {
+                    const inDollars = sum / DOLLAR_COURSE;
+                    setDollars(inDollars);
+                    return inDollars.toFixed(2);
+                }
+
+                function ConvertToEuro({ sum }) {
+                    const inEuro = sum / EURO_COURSE;
+                    setEuro(inEuro);
+                    return inEuro.toFixed(2);
+                }
+
+                return (
+                    <React.Fragment>
+                        <h1 id={"info"}>Сума на рахунку: {sum.toFixed(2)} грн</h1>
+                        <div>
+                            <label For="1">Зарахувати на рахунок: </label>
+                            <input onChange={InputHandle1} value={input1} id={1} type={"number"} />
+                            <button onClick={SendHandle} type="submit">
+                                Зарахувати
+                            </button>
+                        </div>
+                        <div>
+                            <label For="2">Зняти з рахунку: </label>
+                            <input onChange={InputHandle2} value={input2} id={2} type={"number"} />
+                            <button onClick={WithdrawHandle} type="submit">
+                                Зняти
+                            </button>
+                        </div>
+                        <p>Відсотки за обслуговування: {commission} грн</p>
+                        <hr />
+                        <p>
+                            Сума у доларах: $<ConvertToDollars sum={sum} />
+                        </p>
+                        <p>
+                            Сума у євро: Є<ConvertToEuro sum={sum} />
+                        </p>
+                    </React.Fragment>
+                );
+            }
+
+            ReactDOM.render(<App />, document.getElementById("root"));
+        </script> -->
+    </body>
+</html>
